@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,7 +14,7 @@ namespace GAME.Classes
         float a;
         public float dx;
         public static bool isJumping = false;
-        
+
         public Physics(PointF position, Size size)
         {
             transform = new Transform(position, size);
@@ -171,13 +170,12 @@ namespace GAME.Classes
             {
                 transform.position.X = other.position.X - transform.size.Width; // Остановка перед левой стороной трубы
             }
-            else if (dx < 0 && transform.position.Y != other.position.Y) // Если движется влево
+            else if (dx < 0) // Если движется влево
             {
                 transform.position.X = other.position.X + other.size.Width; // Остановка перед правой стороной трубы
             }
             dx = 0;
         }
-
 
 
 
@@ -198,7 +196,7 @@ namespace GAME.Classes
 
         public void CollideJump()
         {
-            if (transform.position.Y > 10)
+            if (transform.position.Y > 180)
             {
                 if (gravity > 0) //&& Jump == true)
                 {
