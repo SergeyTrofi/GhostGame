@@ -70,7 +70,8 @@ namespace GAME
         private void Update(object sender, EventArgs e)
         {
             this.Text = "GhostGame";
-            player.physics.ApplyPhysics(); 
+            player.physics.ApplyPhysics();
+            player.physics.CalculateJump();
             Invalidate();
             FollowPlayer();
         }

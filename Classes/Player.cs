@@ -14,7 +14,7 @@ namespace GAME.Classes
         public Player()
         {
             sprite = Properties.Resources.man2;
-            physics = new Physics(new PointF(300, 180), new Size(35,28));
+            physics = new Physics(new PointF(300, 176), new Size(35,28));
         }
         public void DrawSprite(Graphics g)
         {
