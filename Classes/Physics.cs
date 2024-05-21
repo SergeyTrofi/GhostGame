@@ -10,6 +10,7 @@ namespace GAME.Classes
     public class Physics
     {
         public Transform transform;
+        
         public float gravity;
         float a;
         public float dx;

@@ -83,9 +83,9 @@ namespace GAME.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap man {
+        internal static System.Drawing.Bitmap manL {
             get {
-                object obj = ResourceManager.GetObject("man", resourceCulture);
+                object obj = ResourceManager.GetObject("manL", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -93,9 +93,9 @@ namespace GAME.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap man2 {
+        internal static System.Drawing.Bitmap manR {
             get {
-                object obj = ResourceManager.GetObject("man2", resourceCulture);
+                object obj = ResourceManager.GetObject("manR", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

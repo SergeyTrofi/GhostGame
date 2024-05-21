@@ -13,7 +13,7 @@ namespace GAME.Classes
         public Image sprite;
         public Player()
         {
-            sprite = Properties.Resources.man2;
+            sprite = Properties.Resources.manR;
             physics = new Physics(new PointF(300, 176), new Size(35,28));
         }
         public void DrawSprite(Graphics g)

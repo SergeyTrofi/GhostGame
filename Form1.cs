@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -58,9 +59,11 @@ namespace GAME
             {
                 case "Right":
                     player.physics.dx = 6;
+                    player.sprite = Properties.Resources.manR;
                     break;
                 case "Left":
                     player.physics.dx = -6;
+                    player.sprite = Properties.Resources.manL;
                     break;
                 case "Up":
                     player.physics.ApplyJump();
