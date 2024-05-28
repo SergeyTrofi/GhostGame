@@ -10,7 +10,7 @@ namespace GAME.Classes
     public class PipeController
     {
         public static List<Pipe> pipes;
-        public static int startRoadPosX = 400;
+        public static int startRoadPosX = 800;
         public static int startRoadPosY = 168;
         public static void AddPipe(PointF position)
         {
@@ -27,6 +27,13 @@ namespace GAME.Classes
                 Pipe pipe = new Pipe(position);
                 pipes.Add(pipe);
             }
+        }
+        public static void Init()
+        {
+            pipes = new List<Pipe>();
+            AddPipe(new PointF(700, 168));
+            startRoadPosX = 400;
+            GenerateStartSequencePipe();
         }
     }
 }

@@ -28,5 +28,13 @@ namespace GAME.Classes
                 roads.Add(road);
             }
         }
+        public static void Init()
+        {
+            roads = new List<Road>();
+            AddRoad(new PointF(0, 208)); // Изменяем координаты платформы
+            startRoadPosX = 0;
+            GenerateStartSequence();
+        }
+        
     }
 }

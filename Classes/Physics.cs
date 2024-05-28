@@ -27,20 +27,19 @@ namespace GAME.Classes
         public void ApplyPhysics()
         {
             CalculatePhysics();
-        }
-
-        public void CalculatePhysics()
-        {
-            if (dx != 0)
-            {
-                transform.position.X += dx;
-            }
             Collide();
         }
 
-        public void Collide()
+        private void CalculatePhysics()
         {
-            // Проверка выхода за границы игровой области на основе дорог
+            if (dx != 0)
+            {
+                transform.position = new PointF(transform.position.X + dx, transform.position.Y);
+            }
+        }
+
+        private void Collide()
+        {
             if (RoadController.roads.Count > 0)
             {
                 var firstRoad = RoadController.roads.First().transform;
@@ -49,91 +48,134 @@ namespace GAME.Classes
                 float minX = firstRoad.position.X + 50;
                 float maxX = lastRoad.position.X - lastRoad.size.Width;
 
-                // Обработка коллизий с платформами
-                for (int i = 0; i < PlatformController.platforms.Count; i++)
-                {
-                    var platform = PlatformController.platforms[i];
+                CheckCollisionsWithPlatforms();
+                CheckCollisionsWithPipes();
+                CheckCollisionsWithRivals();
 
-                    if (IsCollidingWith(platform.transform))
-                    {
-                        ResolveVerticalCollision(platform.transform);
-                    }
+                EnsureWithinGameBounds(minX, maxX);
+            }
+        }
+
+        private void CheckCollisionsWithPlatforms()
+        {
+            foreach (var platform in PlatformController.platforms)
+            {
+                if (IsCollidingWith(platform.transform))
+                {
+                    ResolveVerticalCollision(platform.transform);
+                }
+            }
+        }
+
+        private void CheckCollisionsWithPipes()
+        {
+            foreach (var pipe in PipeController.pipes)
+            {
+                if (IsCollidingWith(pipe.transform))
+                {
+                    ResolveVerticalCollision(pipe.transform);
                 }
 
-                // Обработка коллизий с трубами
-                for (int i = 0; i < PipeController.pipes.Count; i++)
+                if (IsHorizontalCollision(pipe.transform))
                 {
-                    var pipe = PipeController.pipes[i];
+                    ResolveHorizontalCollision(pipe.transform);
+                }
+            }
+        }
 
-                    if (IsCollidingWith(pipe.transform))
-                    {
-                        ResolveVerticalCollision(pipe.transform);
-                    }
+        private void CheckCollisionsWithRivals()
+        {
+            for (int i = RivalController.rivals.Count - 1; i >= 0; i--)
+            {
+                var rival = RivalController.rivals[i];
+                rival.Move(); // Двигаем врагов
 
-                    if (IsHorizontalCollision(pipe.transform))
-                    {
-                        ResolveHorizontalCollision(pipe.transform);
-                    }
+                if (IsCollidingWith(rival.transform))
+                {
+                    ResolveVerticalCollision(rival.transform);
                 }
 
-                // Проверка выхода за границы игровой области
-                if (transform.position.X < minX)
+                if (IsHorizontalCollision(rival.transform))
                 {
-                    transform.position.X = minX;
-                    dx = 0;
+                    ResolveHorizontalCollision(rival.transform);
+                    OnRivalCollision(); // Обработка столкновения с врагом сбоку
                 }
-                else if (transform.position.X + transform.size.Width > maxX)
+
+                if (CheckIfFellOn(rival))
                 {
-                    transform.position.X = maxX - transform.size.Width;
-                    dx = 0;
+                    RivalController.rivals.RemoveAt(i); // Удаляем врага, если персонаж упал на него
                 }
+            }
+        }
+
+        private bool CheckIfFellOn(Rival rival)
+        {
+            return (transform.position.Y + transform.size.Height <= rival.transform.position.Y) &&
+                   (transform.position.X + transform.size.Width > rival.transform.position.X) &&
+                   (transform.position.X < rival.transform.position.X + rival.transform.size.Width);
+        }
+
+        private void EnsureWithinGameBounds(float minX, float maxX)
+        {
+            if (transform.position.X < minX)
+            {
+                transform.position = new PointF(minX, transform.position.Y);
+                dx = 0;
+            }
+            else if (transform.position.X + transform.size.Width > maxX)
+            {
+                transform.position = new PointF(maxX - transform.size.Width, transform.position.Y);
+                dx = 0;
             }
         }
 
         private bool IsCollidingWith(Transform other)
         {
-            return transform.position.X + transform.size.Width > other.position.X &&
-                   transform.position.X < other.position.X + other.size.Width &&
-                   transform.position.Y + transform.size.Height > other.position.Y &&
-                   transform.position.Y < other.position.Y + other.size.Height;
+            return (transform.position.X + transform.size.Width > other.position.X) &&
+                   (transform.position.X < other.position.X + other.size.Width) &&
+                   (transform.position.Y + transform.size.Height > other.position.Y) &&
+                   (transform.position.Y < other.position.Y + other.size.Height);
         }
 
         private bool IsHorizontalCollision(Transform other)
         {
-            return transform.position.X + transform.size.Width > other.position.X &&
-                   transform.position.X < other.position.X + other.size.Width;
+            return (transform.position.X + transform.size.Width > other.position.X) &&
+                   (transform.position.X < other.position.X + other.size.Width) &&
+                   (transform.position.Y + transform.size.Height > other.position.Y) &&
+                   (transform.position.Y < other.position.Y + other.size.Height);
         }
 
         private void ResolveVerticalCollision(Transform other)
         {
-            if (gravity > 0) // Если персонаж падает
+            if (gravity > 0) 
             {
-                transform.position.Y = other.position.Y - transform.size.Height; // Остановка на верхней части платформы/трубы
+                transform.position = new PointF(transform.position.X, other.position.Y - transform.size.Height);
                 isJumping = false;
             }
-            else if (gravity < 0) // Если персонаж прыгает вверх и ударяется о низ платформы
+            else if (gravity < 0) 
             {
-
-                transform.position.Y = other.position.Y + other.size.Height; // Остановка при ударе о низ платформы
+                transform.position = new PointF(transform.position.X, other.position.Y + other.size.Height);
             }
         }
 
         private void ResolveHorizontalCollision(Transform other)
         {
-            if (dx > 0 && transform.position.Y >= 168) // Если движется вправо
+            if (dx > 0) 
             {
-                transform.position.X = other.position.X - transform.size.Width; // Остановка перед левой стороной трубы
+                transform.position = new PointF(other.position.X - transform.size.Width, transform.position.Y);
             }
-            else if (dx < 0 && transform.position.Y >= 168) // Если движется влево
+            else if (dx < 0) 
             {
-                transform.position.X = other.position.X + other.size.Width; // Остановка перед правой стороной трубы
+                transform.position = new PointF(other.position.X + other.size.Width, transform.position.Y);
             }
+            dx = 0;
         }
+
         public void ApplyJump()
         {
-            if (!isJumping) // Начинаем прыжок только если его еще нет
+            if (!isJumping)
             {
-                gravity = -10;
+                AddForce();
                 isJumping = true;
             }
         }
@@ -142,18 +184,16 @@ namespace GAME.Classes
         {
             if (isJumping)
             {
-                // Проверяем, не достигли ли мы максимальной высоты прыжка
                 if (transform.position.Y <= 176)
                 {
-                    transform.position.Y += gravity;
-                    gravity += a; // Ускорение свободного падения
+                    transform.position = new PointF(transform.position.X, transform.position.Y + gravity);
+                    gravity += a;
                 }
                 else
                 {
-                    isJumping = false; // Заканчиваем прыжок
+                    isJumping = false;
                 }
 
-                // Проверка на коллизию с землей
                 if (transform.position.Y >= 176 && gravity > 0)
                 {
                     AddForce();
@@ -161,9 +201,15 @@ namespace GAME.Classes
             }
         }
 
-        public void AddForce()
+        private void AddForce()
         {
-            gravity = -10; // Применяем силу прыжка
+            gravity = -10;
+        }
+
+        private void OnRivalCollision()
+        {
+            // Вызываем метод перезапуска игры
+            Form1.RestartGame();
         }
     }
 }

@@ -7,24 +7,14 @@ using System.Threading.Tasks;
 
 namespace GAME.Classes
 {
-    public class Road
+    public class Road : GeneralObjects
     {
-        Image sprite;
-        public Transform transform;
-
-        public int sizeX;
-        public int sizeY;
-
-        public Road(PointF pos)
+        public Road(PointF pos) : base(pos)
         {
             sprite = Properties.Resources.road;
             sizeX = 224;
             sizeY = 32;
             transform = new Transform(pos, new Size(sizeX, sizeY));
-        }
-        public void DrawSprite(Graphics g)
-        {
-            g.DrawImage(sprite, transform.position.X, transform.position.Y, transform.size.Width, transform.size.Height);
         }
     }
 }

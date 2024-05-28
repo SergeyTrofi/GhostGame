@@ -14,6 +14,7 @@ namespace GAME
     {
         Player player;
         Timer timer;
+        public static Form1 Instance;
         public Form1()
         {
             InitializeComponent();
@@ -27,27 +28,16 @@ namespace GAME
             this.Height = 400; // Изменение высоты формы
             this.Width = 600; // Изменение ширины формы
             this.Paint += new PaintEventHandler(OnRepaint);
+            Instance = this;
         }
         public void Init()
         {
-            PlatformController.platforms = new List<Platform>(); 
-            PlatformController.AddPlatform(new PointF(350, 90)); // Изменяем координаты платформы
-            PlatformController.startPlatformPosX = 400;
-            PlatformController.GenerateStartSequence();
-
-            RoadController.roads = new List<Road>();
-            RoadController.AddRoad(new PointF(0, 208)); // Изменяем координаты платформы
-            RoadController.startRoadPosX = 0;
-            RoadController.GenerateStartSequence();
-
-            PipeController.pipes = new List<Pipe>();
-            PipeController.AddPipe(new PointF(700, 168));
-            PipeController.startRoadPosX = 400;
-            PipeController.GenerateStartSequencePipe();
-
+            PipeController.Init();
+            PlatformController.Init();
+            RoadController.Init();
+            RivalController.Init();
             player = new Player();
         }
-
         private void OnKeyboardUp(object sender, KeyEventArgs e)
         {
             player.physics.dx = 0;
@@ -82,43 +72,65 @@ namespace GAME
         public void FollowPlayer()
         {
             int offset = 50 - (int)player.physics.transform.position.X;
-            player.physics.transform.position.X += offset;
+            
+            player.physics.transform.position = new PointF(player.physics.transform.position.X + offset,
+                                                                    player.physics.transform.position.Y);
 
             foreach (var platform in PlatformController.platforms)
             {
-                platform.transform.position.X += offset;
+                platform.transform.position = new PointF(platform.transform.position.X + offset, platform.transform.position.Y);
             }
 
             foreach (var road in RoadController.roads)
             {
-                road.transform.position.X += offset;
+                road.transform.position = new PointF(road.transform.position.X + offset, road.transform.position.Y);
             }
 
             foreach (var pipe in PipeController.pipes)
             {
-                pipe.transform.position.X += offset;
+                pipe.transform.position = new PointF(pipe.transform.position.X + offset, pipe.transform.position.Y);
+            }
+
+            foreach (var rival in RivalController.rivals)
+            {
+                rival.transform.position = new PointF(rival.transform.position.X + offset, rival.transform.position.Y);
             }
         }
         private void OnRepaint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
+            Graphics graphics = e.Graphics;
 
             foreach (var platform in PlatformController.platforms)
             {
-                platform.DrawSprite(g);
+                platform.DrawSprite(graphics);
             }
 
             foreach (var road in RoadController.roads)
             {
-                road.DrawSprite(g);
+                road.DrawSprite(graphics);
             }
 
             foreach (var pipe in PipeController.pipes)
             {
-                pipe.DrawSprite(g);
+                pipe.DrawSprite(graphics);
             }
 
-            player.DrawSprite(g);
+            foreach (var rival in RivalController.rivals)
+            {
+                rival.DrawSprite(graphics);
+            }
+
+            player.DrawSprite(graphics);
         }
+        public static void RestartGame()
+        {
+            Instance.timer.Stop();
+            Instance.Controls.Clear();
+            Instance.InitializeComponent();
+            Instance.Init();
+            Instance.timer.Start();
+        }
+
+        
     }
 }

@@ -7,30 +7,14 @@ using System.Threading.Tasks;
 
 namespace GAME.Classes
 {
-    public class Platform
+    public class Platform : GeneralObjects
     {
-        Image sprite;
-        public Transform transform;
-
-        public int sizeX;
-        public int sizeY;
-
-        public bool isTouchByPlayer;
-        
-        public Platform(PointF pos)
+        public Platform(PointF pos)  :  base(pos)
         {
-            Random rnd = new Random();
-
             sprite = Properties.Resources.platformTwo;
             sizeX = 32;
             sizeY = 16;
             transform = new Transform(pos, new Size(sizeX, sizeY));
-            isTouchByPlayer = false;
-        }
-
-        public void DrawSprite(Graphics g)
-        {
-            g.DrawImage(sprite, transform.position.X, transform.position.Y, transform.size.Width, transform.size.Height);
         }
     }
 }

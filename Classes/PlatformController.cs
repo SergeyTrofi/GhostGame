@@ -24,14 +24,21 @@ namespace GAME.Classes
             for (int i = 0; i < 10; i++)
             {
                 int x = rnd.Next(300, 2750);
-                int y = rnd.Next(80, 120);
+                int y = rnd.Next(80, 150);
                 startPlatformPosX += x;
                 PointF position = new PointF(startPlatformPosX, y);
                 Platform platform = new Platform(position);
                 platforms.Add(platform);
             }
         }
-
+        
+        public static void Init()
+        {
+            platforms = new List<Platform>();
+            AddPlatform(new PointF(350, 90)); // Изменяем координаты платформы
+            startPlatformPosX = 400;
+            GenerateStartSequence();
+        }
     }
 
 }

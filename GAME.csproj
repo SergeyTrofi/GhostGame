@@ -46,13 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ObjInWorld.cs" />
+    <Compile Include="Classes\GeneralObjects.cs" />
     <Compile Include="Classes\Physics.cs" />
     <Compile Include="Classes\Pipe.cs" />
     <Compile Include="Classes\PipeController.cs" />
     <Compile Include="Classes\Platform.cs" />
     <Compile Include="Classes\PlatformController.cs" />
     <Compile Include="Classes\Player.cs" />
+    <Compile Include="Classes\Rival.cs" />
+    <Compile Include="Classes\RivalController.cs" />
     <Compile Include="Classes\Road.cs" />
     <Compile Include="Classes\RoadController.cs" />
     <Compile Include="Classes\Transform.cs" />
@@ -129,6 +131,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\manL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rival.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
