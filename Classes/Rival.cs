@@ -10,24 +10,36 @@ namespace GAME.Classes
 {
     public class Rival : GeneralObjects
     {
+        public float Speed;
+        private float leftBoundary;
+        private float rightBoundary;
+
         public Rival(PointF pos) : base(pos)
         {
-            sprite = Properties.Resources.rival;
-            sizeX = 35;
-            sizeY = 35;
-            transform = new Transform(pos, new Size(sizeX, sizeY));
+            Sprite = Properties.Resources.rival;
+            SizeX = 37;
+            SizeY = 37;
+            Transform = new Transform(pos, new Size(SizeX, SizeY));
+            Speed = 2; // Задаем начальную скорость
+            leftBoundary = 0;
+            rightBoundary = float.MaxValue;
         }
+
+        public void SetBoundaries(float left, float right)
+        {
+            leftBoundary = left;
+            rightBoundary = right;
+        }
+
         public void Move()
         {
-            if (transform.position.X <= 800 + transform.size.Width)
+            Transform.Position = new PointF(Transform.Position.X + Speed, Transform.Position.Y);
+
+            // Поменять направление движения при достижении границы
+            if (Transform.Position.X <= leftBoundary || Transform.Position.X + Transform.Size.Width >= rightBoundary)
             {
-                transform.position = new PointF(transform.position.X - 2, transform.position.Y);
+                Speed = -Speed;
             }
-            if (transform.position.X >= 1600)
-            {
-                transform.position = new PointF(transform.position.X + 2, transform.position.Y);
-            }
-            
         }
     }
 }

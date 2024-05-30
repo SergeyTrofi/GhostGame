@@ -9,16 +9,16 @@ namespace GAME.Classes
 {
     public class Player
     {
-        public Physics physics;
-        public Image sprite;
+        public Physics Physics;
+        public Image Sprite;
         public Player()
         {
-            sprite = Properties.Resources.manR;
-            physics = new Physics(new PointF(300, 176), new Size(35,28));
+            Sprite = Properties.Resources.manR;
+            Physics = new Physics(new PointF(300, 176), new Size(35,28));
         }
         public void DrawSprite(Graphics g)
         {
-            g.DrawImage(sprite, physics.transform.position.X, physics.transform.position.Y, physics.transform.size.Width, physics.transform.size.Height);
+            g.DrawImage(Sprite, Physics.transform.Position.X, Physics.transform.Position.Y, Physics.transform.Size.Width, Physics.transform.Size.Height);
         }
     }
 }

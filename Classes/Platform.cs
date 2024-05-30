@@ -11,10 +11,10 @@ namespace GAME.Classes
     {
         public Platform(PointF pos)  :  base(pos)
         {
-            sprite = Properties.Resources.platformTwo;
-            sizeX = 32;
-            sizeY = 16;
-            transform = new Transform(pos, new Size(sizeX, sizeY));
+            Sprite = Properties.Resources.platformTwo;
+            SizeX = 32;
+            SizeY = 16;
+            Transform = new Transform(pos, new Size(SizeX, SizeY));
         }
     }
 }

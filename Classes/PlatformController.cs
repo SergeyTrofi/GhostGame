@@ -9,13 +9,13 @@ namespace GAME.Classes
 {
     public class PlatformController // если придет жопа, добавить статик
     {
-        public static List<Platform> platforms;
-        public static int startPlatformPosX = 390;
+        public static List<Platform> Platforms;
+        public static int StartPlatformPosX = 390;
 
         public static void AddPlatform(PointF position)
         {
             Platform platform = new Platform(position);
-            platforms.Add(platform);
+            Platforms.Add(platform);
         }
 
         public static void GenerateStartSequence()
@@ -25,18 +25,18 @@ namespace GAME.Classes
             {
                 int x = rnd.Next(300, 2750);
                 int y = rnd.Next(80, 150);
-                startPlatformPosX += x;
-                PointF position = new PointF(startPlatformPosX, y);
+                StartPlatformPosX += x;
+                PointF position = new PointF(StartPlatformPosX, y);
                 Platform platform = new Platform(position);
-                platforms.Add(platform);
+                Platforms.Add(platform);
             }
         }
         
         public static void Init()
         {
-            platforms = new List<Platform>();
+            Platforms = new List<Platform>();
             AddPlatform(new PointF(350, 90)); // Изменяем координаты платформы
-            startPlatformPosX = 400;
+            StartPlatformPosX = 400;
             GenerateStartSequence();
         }
     }

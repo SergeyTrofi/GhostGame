@@ -9,30 +9,30 @@ namespace GAME.Classes
 {
     public class RoadController
     {
-        public static List<Road> roads;
-        public static int startRoadPosX = 0;
-        public static int startRoadPosY = 208;
+        public static List<Road> Roads;
+        public static int StartRoadPosX = 0;
+        public static int StartRoadPosY = 208;
         public static void AddRoad(PointF position)
         {
             Road road = new Road(position);
-            roads.Add(road);
+            Roads.Add(road);
         }
 
         public static void GenerateStartSequence()
         {
             for (int i = 0; i < 16; i++)
             {
-                startRoadPosX += 224;
-                PointF position = new PointF(startRoadPosX, startRoadPosY);
+                StartRoadPosX += 224;
+                PointF position = new PointF(StartRoadPosX, StartRoadPosY);
                 Road road = new Road(position);
-                roads.Add(road);
+                Roads.Add(road);
             }
         }
         public static void Init()
         {
-            roads = new List<Road>();
+            Roads = new List<Road>();
             AddRoad(new PointF(0, 208)); 
-            startRoadPosX = 0;
+            StartRoadPosX = 0;
             GenerateStartSequence();
         }
         

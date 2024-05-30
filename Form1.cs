@@ -7,9 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GAME.Classes;
-/*Как записывать поля класса регистр буквы
+/*
 Phisics refactoring / Fix
-Движение врагов (учиытывать ширину труб и их позиции)*/
+На гите убрать мусор (obj, bin)
+*/
 namespace GAME
 {
     public partial class Form1 : Form
@@ -42,7 +43,7 @@ namespace GAME
         }
         private void OnKeyboardUp(object sender, KeyEventArgs e)
         {
-            player.physics.dx = 0;
+            player.Physics.XMotion = 0;
         }
 
         private void OnKeyboardPressed(object sender, KeyEventArgs e)
@@ -50,74 +51,74 @@ namespace GAME
             switch (e.KeyCode.ToString())
             {
                 case "Right":
-                    player.physics.dx = 6;
-                    player.sprite = Properties.Resources.manR;
+                    player.Physics.XMotion = 6;
+                    player.Sprite = Properties.Resources.manR;
                     break;
                 case "Left":
-                    player.physics.dx = -6;
-                    player.sprite = Properties.Resources.manL;
+                    player.Physics.XMotion = -6;
+                    player.Sprite = Properties.Resources.manL;
                     break;
                 case "Up":
-                    player.physics.ApplyJump();
+                    player.Physics.ApplyJump();
                     break;
             }
         }
         private void Update(object sender, EventArgs e)
         {
             this.Text = "GhostGame";
-            player.physics.ApplyPhysics();
-            player.physics.CalculateJump();
+            player.Physics.ApplyPhysics();
+            player.Physics.CalculateJump();
             Invalidate();
             FollowPlayer();
         }
 
         public void FollowPlayer()
         {
-            int offset = 50 - (int)player.physics.transform.position.X;
+            int offset = 50 - (int)player.Physics.transform.Position.X;
             
-            player.physics.transform.position = new PointF(player.physics.transform.position.X + offset,
-                                                                    player.physics.transform.position.Y);
+            player.Physics.transform.Position = new PointF(player.Physics.transform.Position.X + offset,
+                                                                    player.Physics.transform.Position.Y);
 
-            foreach (var platform in PlatformController.platforms)
+            foreach (var platform in PlatformController.Platforms)
             {
-                platform.transform.position = new PointF(platform.transform.position.X + offset, platform.transform.position.Y);
+                platform.Transform.Position = new PointF(platform.Transform.Position.X + offset, platform.Transform.Position.Y);
             }
 
-            foreach (var road in RoadController.roads)
+            foreach (var road in RoadController.Roads)
             {
-                road.transform.position = new PointF(road.transform.position.X + offset, road.transform.position.Y);
+                road.Transform.Position = new PointF(road.Transform.Position.X + offset, road.Transform.Position.Y);
             }
 
-            foreach (var pipe in PipeController.pipes)
+            foreach (var pipe in PipeController.Pipes)
             {
-                pipe.transform.position = new PointF(pipe.transform.position.X + offset, pipe.transform.position.Y);
+                pipe.Transform.Position = new PointF(pipe.Transform.Position.X + offset, pipe.Transform.Position.Y);
             }
 
-            foreach (var rival in RivalController.rivals)
+            foreach (var rival in RivalController.Rivals)
             {
-                rival.transform.position = new PointF(rival.transform.position.X + offset, rival.transform.position.Y);
+                rival.Transform.Position = new PointF(rival.Transform.Position.X + offset, rival.Transform.Position.Y);
             }
         }
         private void OnRepaint(object sender, PaintEventArgs e)
         {
             Graphics graphics = e.Graphics;
 
-            foreach (var platform in PlatformController.platforms)
+            foreach (var platform in PlatformController.Platforms)
             {
                 platform.DrawSprite(graphics);
             }
 
-            foreach (var road in RoadController.roads)
+            foreach (var road in RoadController.Roads)
             {
                 road.DrawSprite(graphics);
             }
 
-            foreach (var pipe in PipeController.pipes)
+            foreach (var pipe in PipeController.Pipes)
             {
                 pipe.DrawSprite(graphics);
             }
 
-            foreach (var rival in RivalController.rivals)
+            foreach (var rival in RivalController.Rivals)
             {
                 rival.DrawSprite(graphics);
             }

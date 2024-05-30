@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -11,25 +12,25 @@ namespace GAME.Classes
     {
         public Transform transform;
         
-        public float gravity;
+        public float Gravity;
         float a;
-        public float dx;
-        public static bool isJumping = false;
+        public float XMotion;
+        public bool IsJumping = false;  
 
         public Physics(PointF position, Size size)
         {
             transform = new Transform(position, size);
-            gravity = 0;
+            Gravity = 0;
             a = 0.4f;
-            dx = 0;
+            XMotion = 0;
         }
 
         public void ApplyPhysics()
         {
-            if (transform.position.Y > 176)
+            if (transform.Position.Y > 176)
             {
-                transform.position.Y = 176;
-                isJumping = false;
+                transform.Position.Y = 176;
+                IsJumping = false;
             }
             CalculatePhysics();
             Collide();
@@ -37,22 +38,28 @@ namespace GAME.Classes
 
         private void CalculatePhysics()
         {
-            if (dx != 0)
+            if (XMotion != 0)
             {
-                transform.position = new PointF(transform.position.X + dx, transform.position.Y);
+                transform.Position = new PointF(transform.Position.X + XMotion, transform.Position.Y);
             }
+            if (transform.Position.Y < 176)
+            {
+                transform.Position = new PointF(transform.Position.X, transform.Position.Y + Gravity);
+                Gravity += a; // Ускорение под действием гравитации
+            }
+           
         }
 
         private void Collide()
         {
             
-            if (RoadController.roads.Count > 0)
+            if (RoadController.Roads.Count > 0)
             {
-                var firstRoad = RoadController.roads.First().transform;
-                var lastRoad = RoadController.roads.Last().transform;
+                var firstRoad = RoadController.Roads.First().Transform;
+                var lastRoad = RoadController.Roads.Last().Transform;
 
-                float minX = firstRoad.position.X + 50;
-                float maxX = lastRoad.position.X - lastRoad.size.Width;
+                float minX = firstRoad.Position.X + 50;
+                float maxX = lastRoad.Position.X - lastRoad.Size.Width;
                 
                 CheckCollisionsWithPlatforms();
                 CheckCollisionsWithPipes();
@@ -64,146 +71,164 @@ namespace GAME.Classes
 
         private void CheckCollisionsWithPlatforms()
         {
-            foreach (var platform in PlatformController.platforms)
+            foreach (var platform in PlatformController.Platforms)
             {
-                if (IsCollidingWith(platform.transform))
+                while (IsHorizontalCollision(platform.Transform))
                 {
-                    ResolveVerticalCollision(platform.transform);
-                    
+                    ResolveVerticalCollision(platform.Transform);
                 }
             }
         }
 
-        private void CheckCollisionsWithPipes()
+        private bool CheckCollisionsWithPipes()
         {
-            foreach (var pipe in PipeController.pipes)
+            foreach (var pipe in PipeController.Pipes)
             {
-                if (IsCollidingWith(pipe.transform))
-                {   
-                    ResolveVerticalCollision(pipe.transform);
-                    
+                if (IsHorizontalCollision(pipe.Transform))
+                {
+                    // Проверяем вертикальное столкновение для корректировки позиции игрока по оси Y
+                    if (IsVerticalCollision(pipe.Transform))
+                    {
+                        ResolveVerticalCollision(pipe.Transform);
+                        return true; // Игрок на трубе
+                    }
+                    else
+                    {
+                        ResolveHorizontalCollision(pipe.Transform);
+                    }
                 }
                 
-                if (IsHorizontalCollision(pipe.transform))
-                {
-                    ResolveHorizontalCollision(pipe.transform);
-                    
-                }
             }
+            return false; // Игрок не на трубе
         }
+
+
 
         private void CheckCollisionsWithRivals()
         {
-            for (int i = RivalController.rivals.Count - 1; i >= 0; i--)
+            var rivals = new List<Rival>(RivalController.Rivals); // Создаем копию списка
+            
+            foreach (var rival in rivals)
             {
-                var rival = RivalController.rivals[i];
-                rival.Move(); // Двигаем врагов
+                // Установим границы движения для врага
+                float leftBoundary = float.MinValue;
+                float rightBoundary = float.MaxValue;
 
-                /*if (IsCollidingWith(rival.transform))
+                foreach (var pipe in PipeController.Pipes)
                 {
-                    ResolveVerticalCollision(rival.transform);
-                }*/
+                    if (pipe.Transform.Position.X < rival.Transform.Position.X && pipe.Transform.Position.X + pipe.Transform.Size.Width > leftBoundary)
+                    {
+                        leftBoundary = pipe.Transform.Position.X + pipe.Transform.Size.Width;
+                    }
 
-                if (IsHorizontalCollision(rival.transform))
-                {
-                    //ResolveHorizontalCollision(rival.transform);
-                    OnRivalCollision(); // Обработка столкновения с врагом сбоку
+                    if (pipe.Transform.Position.X > rival.Transform.Position.X && pipe.Transform.Position.X < rightBoundary)
+                    {
+                        rightBoundary = pipe.Transform.Position.X;
+                    }
                 }
+
+                rival.SetBoundaries(leftBoundary, rightBoundary);
+
+                // Двигаем врагов
+                rival.Move();
 
                 if (CheckIfFellOn(rival))
                 {
-                    RivalController.rivals.RemoveAt(i); // Удаляем врага, если персонаж упал на него
+                    RivalController.Rivals.Remove(rival); // Удаляем врага, если персонаж упал на него
+                }
+
+                if (IsHorizontalCollision(rival.Transform))
+                {
+                    OnRivalCollision(); // Обработка столкновения с врагом сбоку
                 }
             }
         }
 
+
         private bool CheckIfFellOn(Rival rival)
         {
-            return (transform.position.Y + transform.size.Height <= rival.transform.position.Y) &&
-                   (transform.position.X + transform.size.Width > rival.transform.position.X) &&
-                   (transform.position.X < rival.transform.position.X + rival.transform.size.Width);
+            return (transform.Position.Y + transform.Size.Height >= rival.Transform.Position.Y - 5) &&
+                   (transform.Position.X + transform.Size.Width > rival.Transform.Position.X) &&
+                   (transform.Position.X < rival.Transform.Position.X + rival.Transform.Size.Width);
         }
 
         private void EnsureWithinGameBounds(float minX, float maxX)
         {
-            if (transform.position.X < minX)
+            if (transform.Position.X < minX)
             {
-                transform.position = new PointF(minX, transform.position.Y);
-                dx = 0;
+                transform.Position = new PointF(minX, transform.Position.Y);
+                XMotion = 0;
             }
-            else if (transform.position.X + transform.size.Width > maxX)
+            else if (transform.Position.X + transform.Size.Width > maxX)
             {
-                transform.position = new PointF(maxX - transform.size.Width, transform.position.Y);
-                dx = 0;
+                transform.Position = new PointF(maxX - transform.Size.Width, transform.Position.Y);
+                XMotion = 0;
             }
         }
-
-        private bool IsCollidingWith(Transform other)
-        {
-            return (transform.position.X + transform.size.Width > other.position.X) &&
-                   (transform.position.X < other.position.X + other.size.Width) &&
-                   (transform.position.Y + transform.size.Height > other.position.Y) &&
-                   (transform.position.Y < other.position.Y + other.size.Height);
-        }
-
         private bool IsHorizontalCollision(Transform other)
         {
-            return (transform.position.X + transform.size.Width > other.position.X) &&
-                   (transform.position.X < other.position.X + other.size.Width) &&
-                   (transform.position.Y + transform.size.Height > other.position.Y) &&
-                   (transform.position.Y < other.position.Y + other.size.Height);
+            return (transform.Position.X + transform.Size.Width > other.Position.X) &&
+                   (transform.Position.X < other.Position.X + other.Size.Width) &&
+                   (transform.Position.Y + transform.Size.Height > other.Position.Y) &&
+                   (transform.Position.Y < other.Position.Y + other.Size.Height);
         }
-
-        private void ResolveVerticalCollision(Transform other)
+        private bool IsVerticalCollision(Transform other)
         {
-            if (gravity > 0) 
-            {
-                transform.position = new PointF(transform.position.X, other.position.Y - transform.size.Height);
-                isJumping = false;
-            }
-            else if (gravity < 0) 
-            {
-                transform.position = new PointF(transform.position.X, other.position.Y + other.size.Height);
-            }
+            return (transform.Position.Y + transform.Size.Height > other.Position.Y) &&
+                   (transform.Position.Y < other.Position.Y + other.Size.Height) &&
+                   (transform.Position.X + transform.Size.Width > other.Position.X) &&
+                   (transform.Position.X < other.Position.X + other.Size.Width);
         }
-
         private void ResolveHorizontalCollision(Transform other)
         {
-            if (dx > 0) 
+            if (XMotion > 0) // Игрок движется вправо
             {
-                transform.position = new PointF(other.position.X - transform.size.Width, transform.position.Y);
+                transform.Position = new PointF(other.Position.X - transform.Size.Width, transform.Position.Y);
+                XMotion = 0; // Остановить движение
             }
-            else if (dx < 0) 
+            else if (XMotion < 0) // Игрок движется влево
             {
-                transform.position = new PointF(other.position.X + other.size.Width, transform.position.Y);
+                transform.Position = new PointF(other.Position.X + other.Size.Width, transform.Position.Y);
+                XMotion = 0; // Остановить движение
             }
-            dx = 0;
+        }
+        private void ResolveVerticalCollision(Transform other)
+        {
+            if (Gravity > 0) 
+            {
+                transform.Position = new PointF(transform.Position.X, other.Position.Y - transform.Size.Height);
+                IsJumping = false;
+            }
+            else if (Gravity < 0) 
+            {
+                transform.Position = new PointF(transform.Position.X, other.Position.Y + transform.Size.Height);
+            }
         }
 
         public void ApplyJump()
         {
-            if (!isJumping)
+            if (!IsJumping)
             {
                 AddForce();
-                isJumping = true;
+                IsJumping = true;
             }
         }
 
         public void CalculateJump()
         {
-            if (isJumping)
+            if (IsJumping)
             {
-                if (transform.position.Y <= 176)
+                if (transform.Position.Y <= 176)
                 {
-                    transform.position = new PointF(transform.position.X, transform.position.Y + gravity);
-                    gravity += a;
+                    transform.Position = new PointF(transform.Position.X, transform.Position.Y + Gravity);
+                    Gravity += a;
                 }
                 else
                 {
-                    isJumping = false;
+                    IsJumping = false;
                 }
 
-                if (transform.position.Y >= 176 && gravity > 0)
+                if (transform.Position.Y >= 176 && Gravity > 0)
                 {
                     AddForce();
                 }
@@ -212,7 +237,7 @@ namespace GAME.Classes
 
         private void AddForce()
         {
-            gravity = -10;
+            Gravity = -10;
         }
 
         private void OnRivalCollision()

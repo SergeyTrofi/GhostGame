@@ -11,10 +11,10 @@ namespace GAME.Classes
     {
         public Road(PointF pos) : base(pos)
         {
-            sprite = Properties.Resources.road;
-            sizeX = 224;
-            sizeY = 32;
-            transform = new Transform(pos, new Size(sizeX, sizeY));
+            Sprite = Properties.Resources.road;
+            SizeX = 224;
+            SizeY = 32;
+            Transform = new Transform(pos, new Size(SizeX, SizeY));
         }
     }
 }

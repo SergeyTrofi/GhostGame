@@ -9,13 +9,13 @@ namespace GAME.Classes
 {
     public class Transform
     {
-        public PointF position;
-        public Size size;
+        public PointF Position;
+        public Size Size;
 
         public Transform(PointF positoin, Size size)
         {
-            this.position = positoin;
-            this.size = size;
+            this.Position = positoin;
+            this.Size = size;
         }
     }
 }

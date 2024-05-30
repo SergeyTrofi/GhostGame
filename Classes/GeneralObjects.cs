@@ -9,17 +9,17 @@ namespace GAME.Classes
 {
     public class GeneralObjects
     {
-        public Image sprite;
-        public Transform transform;
-        public int sizeX;
-        public int sizeY;
+        public Image Sprite;
+        public Transform Transform;
+        public int SizeX;
+        public int SizeY;
         public GeneralObjects(PointF pos)
         {
             
         }
         public void DrawSprite(Graphics g)
         {
-            g.DrawImage(sprite, transform.position.X, transform.position.Y, transform.size.Width, transform.size.Height);
+            g.DrawImage(Sprite, Transform.Position.X, Transform.Position.Y, Transform.Size.Width, Transform.Size.Height);
         }
     }
 }

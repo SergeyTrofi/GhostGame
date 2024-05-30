@@ -12,10 +12,10 @@ namespace GAME.Classes
     {
         public Pipe(PointF pos) : base(pos)
         {
-            sprite = Properties.Resources.pipe;
-            sizeX = 40;
-            sizeY = 40;
-            transform = new Transform(pos, new Size(sizeX, sizeY));
+            Sprite = Properties.Resources.pipe;
+            SizeX = 40;
+            SizeY = 40;
+            Transform = new Transform(pos, new Size(SizeX, SizeY));
         }
     }
 }
