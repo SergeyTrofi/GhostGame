@@ -26,6 +26,11 @@ namespace GAME.Classes
 
         public void ApplyPhysics()
         {
+            if (transform.position.Y > 176)
+            {
+                transform.position.Y = 176;
+                isJumping = false;
+            }
             CalculatePhysics();
             Collide();
         }
@@ -40,6 +45,7 @@ namespace GAME.Classes
 
         private void Collide()
         {
+            
             if (RoadController.roads.Count > 0)
             {
                 var firstRoad = RoadController.roads.First().transform;
@@ -47,12 +53,12 @@ namespace GAME.Classes
 
                 float minX = firstRoad.position.X + 50;
                 float maxX = lastRoad.position.X - lastRoad.size.Width;
-
+                
                 CheckCollisionsWithPlatforms();
                 CheckCollisionsWithPipes();
                 CheckCollisionsWithRivals();
-
                 EnsureWithinGameBounds(minX, maxX);
+                
             }
         }
 
@@ -63,6 +69,7 @@ namespace GAME.Classes
                 if (IsCollidingWith(platform.transform))
                 {
                     ResolveVerticalCollision(platform.transform);
+                    
                 }
             }
         }
@@ -72,13 +79,15 @@ namespace GAME.Classes
             foreach (var pipe in PipeController.pipes)
             {
                 if (IsCollidingWith(pipe.transform))
-                {
+                {   
                     ResolveVerticalCollision(pipe.transform);
+                    
                 }
-
+                
                 if (IsHorizontalCollision(pipe.transform))
                 {
                     ResolveHorizontalCollision(pipe.transform);
+                    
                 }
             }
         }
@@ -90,14 +99,14 @@ namespace GAME.Classes
                 var rival = RivalController.rivals[i];
                 rival.Move(); // Двигаем врагов
 
-                if (IsCollidingWith(rival.transform))
+                /*if (IsCollidingWith(rival.transform))
                 {
                     ResolveVerticalCollision(rival.transform);
-                }
+                }*/
 
                 if (IsHorizontalCollision(rival.transform))
                 {
-                    ResolveHorizontalCollision(rival.transform);
+                    //ResolveHorizontalCollision(rival.transform);
                     OnRivalCollision(); // Обработка столкновения с врагом сбоку
                 }
 
@@ -208,7 +217,6 @@ namespace GAME.Classes
 
         private void OnRivalCollision()
         {
-            // Вызываем метод перезапуска игры
             Form1.RestartGame();
         }
     }

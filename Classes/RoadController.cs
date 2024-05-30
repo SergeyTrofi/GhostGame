@@ -31,7 +31,7 @@ namespace GAME.Classes
         public static void Init()
         {
             roads = new List<Road>();
-            AddRoad(new PointF(0, 208)); // Изменяем координаты платформы
+            AddRoad(new PointF(0, 208)); 
             startRoadPosX = 0;
             GenerateStartSequence();
         }

@@ -7,7 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GAME.Classes;
-
+/*Как записывать поля класса регистр буквы
+Phisics refactoring / Fix
+Движение врагов (учиытывать ширину труб и их позиции)*/
 namespace GAME
 {
     public partial class Form1 : Form
@@ -130,7 +132,5 @@ namespace GAME
             Instance.Init();
             Instance.timer.Start();
         }
-
-        
     }
 }
