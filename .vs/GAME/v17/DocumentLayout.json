@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "D:\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0430 C#\\GAME\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|D:\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0430 C#\\GAME\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|d:\\\u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0430 c#\\game\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|solutionrelative:form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -27,7 +27,7 @@
       "RelativeMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|solutionrelative:classes\\generalobjects.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|d:\\\u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0430 c#\\game\\classes\\transform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|D:\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0430 C#\\GAME\\classes\\transform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|solutionrelative:classes\\transform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -39,7 +39,7 @@
       "RelativeMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|solutionrelative:classes\\pipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|d:\\\u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0430 c#\\game\\classes\\platformcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|D:\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0430 C#\\GAME\\classes\\platformcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{65AD3CCF-DB41-4064-BF79-CE6B81B5D872}|GAME.csproj|solutionrelative:classes\\platformcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -72,7 +72,7 @@
               "RelativeDocumentMoniker": "Form1.cs",
               "ToolTip": "D:\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435 \u043D\u0430 C#\\GAME\\Form1.cs",
               "RelativeToolTip": "Form1.cs",
-              "ViewState": "AQIAAHMAAAAAAAAAAAAwwH0AAAAoAAAA",
+              "ViewState": "AQIAAHYAAAAAAAAAAAAwwIYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-24T22:38:17.897Z",
               "IsPinned": true,
@@ -89,8 +89,7 @@
               "ViewState": "AQIAANYAAAAAAAAAAAAqwK8AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-24T15:58:03.435Z",
-              "IsPinned": true,
-              "EditorCaption": ""
+              "IsPinned": true
             },
             {
               "$type": "Bookmark",
@@ -110,8 +109,7 @@
               "RelativeToolTip": "Classes\\RivalController.cs",
               "ViewState": "AQIAAAYAAAAAAAAAAAAAABEAAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T14:28:39.715Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-28T14:28:39.715Z"
             },
             {
               "$type": "Document",
@@ -123,8 +121,7 @@
               "RelativeToolTip": "Classes\\Transform.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-30T19:24:46.646Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-30T19:24:46.646Z"
             },
             {
               "$type": "Document",
@@ -136,8 +133,7 @@
               "RelativeToolTip": "Classes\\Platform.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-04-24T13:55:30.739Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-04-24T13:55:30.739Z"
             },
             {
               "$type": "Document",
@@ -149,8 +145,7 @@
               "RelativeToolTip": "Classes\\PipeController.cs",
               "ViewState": "AQIAAAcAAAAAAAAAAAAAACIAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T14:24:41.148Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-28T14:24:41.148Z"
             },
             {
               "$type": "Document",
@@ -162,8 +157,7 @@
               "RelativeToolTip": "Classes\\Pipe.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T10:55:11.384Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-28T10:55:11.384Z"
             },
             {
               "$type": "Document",
@@ -175,8 +169,7 @@
               "RelativeToolTip": "Classes\\GeneralObjects.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T12:00:36.203Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-28T12:00:36.203Z"
             },
             {
               "$type": "Document",
@@ -188,8 +181,7 @@
               "RelativeToolTip": "Classes\\Rival.cs",
               "ViewState": "AQIAAAcAAAAAAAAAAAAowAwAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-27T16:45:46.369Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-27T16:45:46.369Z"
             },
             {
               "$type": "Document",
@@ -201,8 +193,7 @@
               "RelativeToolTip": "Classes\\Road.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T10:40:54.475Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-28T10:40:54.475Z"
             },
             {
               "$type": "Document",
@@ -214,8 +205,7 @@
               "RelativeToolTip": "Classes\\PlatformController.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAABUAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-28T14:28:41.653Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-28T14:28:41.653Z"
             },
             {
               "$type": "Document",
@@ -227,8 +217,7 @@
               "RelativeToolTip": "Classes\\Player.cs",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAWAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T11:55:27.651Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-05-29T11:55:27.651Z"
             },
             {
               "$type": "Document",

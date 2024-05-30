@@ -132,6 +132,7 @@ namespace GAME
             Instance.InitializeComponent();
             Instance.Init();
             Instance.timer.Start();
+
         }
     }
 }
