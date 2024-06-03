@@ -163,9 +163,19 @@ namespace GAME.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap rival {
+        internal static System.Drawing.Bitmap rivalL {
             get {
-                object obj = ResourceManager.GetObject("rival", resourceCulture);
+                object obj = ResourceManager.GetObject("rivalL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap rivalR {
+            get {
+                object obj = ResourceManager.GetObject("rivalR", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

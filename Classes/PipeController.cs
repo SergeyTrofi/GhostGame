@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GAME.Classes
 {
-    public class PipeController
+    public class PipeController 
     {
         public static List<Pipe> Pipes;
         public static int StartRoadPosX = 800;
@@ -18,7 +18,7 @@ namespace GAME.Classes
             Pipes.Add(pipe);
         }
 
-        public static void GenerateStartSequencePipe()
+        public static void GenerateStartSequencePipes()
         {
             for (int i = 0; i < 2; i++)
             {
@@ -33,7 +33,7 @@ namespace GAME.Classes
             Pipes = new List<Pipe>();
             AddPipe(new PointF(700, 168));
             StartRoadPosX = 400;
-            GenerateStartSequencePipe();
+            GenerateStartSequencePipes();
         }
     }
 }

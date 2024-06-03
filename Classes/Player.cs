@@ -18,7 +18,7 @@ namespace GAME.Classes
         }
         public void DrawSprite(Graphics g)
         {
-            g.DrawImage(Sprite, Physics.transform.Position.X, Physics.transform.Position.Y, Physics.transform.Size.Width, Physics.transform.Size.Height);
+            g.DrawImage(Sprite, Physics.Transform.Position.X, Physics.Transform.Position.Y, Physics.Transform.Size.Width, Physics.Transform.Size.Height);
         }
     }
 }

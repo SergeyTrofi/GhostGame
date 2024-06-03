@@ -18,7 +18,7 @@ namespace GAME.Classes
             Rivals.Add(rival);
         }
 
-        public static void GenerateStartSequencePipe()
+        public static void GenerateStartSequenceRivals()
         {
             for (int i = 0; i < 2; i++)
             {
@@ -33,7 +33,7 @@ namespace GAME.Classes
             Rivals = new List<Rival>();
             AddRival(new PointF(800, 176));
             StartPosX = 800;
-            GenerateStartSequencePipe();
+            GenerateStartSequenceRivals();
         }
     }
 }

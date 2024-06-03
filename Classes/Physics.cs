@@ -6,30 +6,32 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using GAME.Classes;
+
 namespace GAME.Classes
 {
     public class Physics
     {
-        public Transform transform;
-        
-        public float Gravity;
-        float a;
-        public float XMotion;
-        public bool IsJumping = false;  
+        public Transform Transform;
+
+        public float Gravity { get; set; }
+        private float a;
+        public float XMotion { get; set; }
+        public bool IsJumping = false;
 
         public Physics(PointF position, Size size)
         {
-            transform = new Transform(position, size);
+            Transform = new Transform(position, size);
             Gravity = 0;
             a = 0.4f;
             XMotion = 0;
+            IsJumping = false; // Initialize IsJumping
         }
 
         public void ApplyPhysics()
         {
-            if (transform.Position.Y > 176)
+            if (Transform.Position.Y > 176)
             {
-                transform.Position.Y = 176;
+                Transform.Position.Y = 176;
                 IsJumping = false;
             }
             CalculatePhysics();
@@ -40,19 +42,19 @@ namespace GAME.Classes
         {
             if (XMotion != 0)
             {
-                transform.Position = new PointF(transform.Position.X + XMotion, transform.Position.Y);
+                Transform.Position = new PointF(Transform.Position.X + XMotion, Transform.Position.Y);
             }
-            if (transform.Position.Y < 176)
+            if (Transform.Position.Y < 176)
             {
-                transform.Position = new PointF(transform.Position.X, transform.Position.Y + Gravity);
+                Transform.Position = new PointF(Transform.Position.X, Transform.Position.Y + Gravity);
                 Gravity += a; // Ускорение под действием гравитации
             }
-           
+
         }
 
         private void Collide()
         {
-            
+
             if (RoadController.Roads.Count > 0)
             {
                 var firstRoad = RoadController.Roads.First().Transform;
@@ -60,12 +62,12 @@ namespace GAME.Classes
 
                 float minX = firstRoad.Position.X + 50;
                 float maxX = lastRoad.Position.X - lastRoad.Size.Width;
-                
+
                 CheckCollisionsWithPlatforms();
                 CheckCollisionsWithPipes();
                 CheckCollisionsWithRivals();
                 EnsureWithinGameBounds(minX, maxX);
-                
+
             }
         }
 
@@ -73,7 +75,7 @@ namespace GAME.Classes
         {
             foreach (var platform in PlatformController.Platforms)
             {
-                while (IsHorizontalCollision(platform.Transform))
+                if (IsVerticalCollision(platform.Transform))
                 {
                     ResolveVerticalCollision(platform.Transform);
                 }
@@ -82,32 +84,29 @@ namespace GAME.Classes
 
         private bool CheckCollisionsWithPipes()
         {
+            bool isOnPipe = false; // Флаг, чтобы отслеживать, находится ли игрок на трубе
+
             foreach (var pipe in PipeController.Pipes)
             {
+                if (IsVerticalCollision(pipe.Transform))
+                {
+                    ResolveVerticalCollision(pipe.Transform);
+                    isOnPipe = true; // Игрок на трубе
+                }
                 if (IsHorizontalCollision(pipe.Transform))
                 {
-                    // Проверяем вертикальное столкновение для корректировки позиции игрока по оси Y
-                    if (IsVerticalCollision(pipe.Transform))
-                    {
-                        ResolveVerticalCollision(pipe.Transform);
-                        return true; // Игрок на трубе
-                    }
-                    else
-                    {
-                        ResolveHorizontalCollision(pipe.Transform);
-                    }
+                    ResolveHorizontalCollision(pipe.Transform);
                 }
-                
             }
-            return false; // Игрок не на трубе
-        }
 
+            return isOnPipe; // Возвращаем true, если игрок на трубе, иначе false
+        }
 
 
         private void CheckCollisionsWithRivals()
         {
             var rivals = new List<Rival>(RivalController.Rivals); // Создаем копию списка
-            
+
             foreach (var rival in rivals)
             {
                 // Установим границы движения для врага
@@ -137,9 +136,9 @@ namespace GAME.Classes
                     RivalController.Rivals.Remove(rival); // Удаляем врага, если персонаж упал на него
                 }
 
-                if (IsHorizontalCollision(rival.Transform))
+                if (IsHorizontalCollision(rival.Transform) || RivalController.Rivals.Count <= 0)
                 {
-                    OnRivalCollision(); // Обработка столкновения с врагом сбоку
+                    OnRivalCollision(); 
                 }
             }
         }
@@ -147,61 +146,61 @@ namespace GAME.Classes
 
         private bool CheckIfFellOn(Rival rival)
         {
-            return (transform.Position.Y + transform.Size.Height >= rival.Transform.Position.Y - 5) &&
-                   (transform.Position.X + transform.Size.Width > rival.Transform.Position.X) &&
-                   (transform.Position.X < rival.Transform.Position.X + rival.Transform.Size.Width);
+            return (Transform.Position.Y + Transform.Size.Height >= rival.Transform.Position.Y - 5) &&
+                   (Transform.Position.X + Transform.Size.Width > rival.Transform.Position.X) &&
+                   (Transform.Position.X < rival.Transform.Position.X + rival.Transform.Size.Width);
         }
 
         private void EnsureWithinGameBounds(float minX, float maxX)
         {
-            if (transform.Position.X < minX)
+            if (Transform.Position.X < minX)
             {
-                transform.Position = new PointF(minX, transform.Position.Y);
+                Transform.Position = new PointF(minX, Transform.Position.Y);
                 XMotion = 0;
             }
-            else if (transform.Position.X + transform.Size.Width > maxX)
+            else if (Transform.Position.X + Transform.Size.Width > maxX)
             {
-                transform.Position = new PointF(maxX - transform.Size.Width, transform.Position.Y);
+                Transform.Position = new PointF(maxX - Transform.Size.Width, Transform.Position.Y);
                 XMotion = 0;
             }
         }
         private bool IsHorizontalCollision(Transform other)
         {
-            return (transform.Position.X + transform.Size.Width > other.Position.X) &&
-                   (transform.Position.X < other.Position.X + other.Size.Width) &&
-                   (transform.Position.Y + transform.Size.Height > other.Position.Y) &&
-                   (transform.Position.Y < other.Position.Y + other.Size.Height);
+            return (Transform.Position.X + Transform.Size.Width > other.Position.X) &&
+                   (Transform.Position.X < other.Position.X + other.Size.Width) &&
+                   (Transform.Position.Y + Transform.Size.Height > other.Position.Y) &&
+                   (Transform.Position.Y < other.Position.Y + other.Size.Height);
         }
         private bool IsVerticalCollision(Transform other)
         {
-            return (transform.Position.Y + transform.Size.Height > other.Position.Y) &&
-                   (transform.Position.Y < other.Position.Y + other.Size.Height) &&
-                   (transform.Position.X + transform.Size.Width > other.Position.X) &&
-                   (transform.Position.X < other.Position.X + other.Size.Width);
+            return (Transform.Position.Y + Transform.Size.Height > other.Position.Y) &&
+                   (Transform.Position.Y < other.Position.Y + other.Size.Height) &&
+                   (Transform.Position.X + Transform.Size.Width > other.Position.X) &&
+                   (Transform.Position.X < other.Position.X + other.Size.Width);
         }
         private void ResolveHorizontalCollision(Transform other)
         {
             if (XMotion > 0) // Игрок движется вправо
             {
-                transform.Position = new PointF(other.Position.X - transform.Size.Width, transform.Position.Y);
+                Transform.Position = new PointF(other.Position.X - Transform.Size.Width, Transform.Position.Y);
                 XMotion = 0; // Остановить движение
             }
             else if (XMotion < 0) // Игрок движется влево
             {
-                transform.Position = new PointF(other.Position.X + other.Size.Width, transform.Position.Y);
+                Transform.Position = new PointF(other.Position.X + other.Size.Width, Transform.Position.Y);
                 XMotion = 0; // Остановить движение
             }
         }
         private void ResolveVerticalCollision(Transform other)
         {
-            if (Gravity > 0) 
+            if (Gravity > 0) // Игрок падает
             {
-                transform.Position = new PointF(transform.Position.X, other.Position.Y - transform.Size.Height);
+                Transform.Position = new PointF(Transform.Position.X, other.Position.Y - Transform.Size.Height);
                 IsJumping = false;
             }
-            else if (Gravity < 0) 
+            else if (Gravity < 0 && IsJumping) // Игрок прыгает, и находится в воздухе
             {
-                transform.Position = new PointF(transform.Position.X, other.Position.Y + transform.Size.Height);
+                Transform.Position = new PointF(Transform.Position.X, other.Position.Y + Transform.Size.Height);
             }
         }
 
@@ -218,9 +217,9 @@ namespace GAME.Classes
         {
             if (IsJumping)
             {
-                if (transform.Position.Y <= 176)
+                if (Transform.Position.Y <= 176)
                 {
-                    transform.Position = new PointF(transform.Position.X, transform.Position.Y + Gravity);
+                    Transform.Position = new PointF(Transform.Position.X, Transform.Position.Y + Gravity);
                     Gravity += a;
                 }
                 else
@@ -228,7 +227,7 @@ namespace GAME.Classes
                     IsJumping = false;
                 }
 
-                if (transform.Position.Y >= 176 && Gravity > 0)
+                if (Transform.Position.Y >= 176 && Gravity > 0)
                 {
                     AddForce();
                 }
@@ -246,4 +245,3 @@ namespace GAME.Classes
         }
     }
 }
-

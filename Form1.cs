@@ -74,10 +74,10 @@ namespace GAME
 
         public void FollowPlayer()
         {
-            int offset = 50 - (int)player.Physics.transform.Position.X;
+            int offset = 50 - (int)player.Physics.Transform.Position.X;
             
-            player.Physics.transform.Position = new PointF(player.Physics.transform.Position.X + offset,
-                                                                    player.Physics.transform.Position.Y);
+            player.Physics.Transform.Position = new PointF(player.Physics.Transform.Position.X + offset,
+                                                                    player.Physics.Transform.Position.Y);
 
             foreach (var platform in PlatformController.Platforms)
             {

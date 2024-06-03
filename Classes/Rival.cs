@@ -16,7 +16,7 @@ namespace GAME.Classes
 
         public Rival(PointF pos) : base(pos)
         {
-            Sprite = Properties.Resources.rival;
+            Sprite = Properties.Resources.rivalR;
             SizeX = 37;
             SizeY = 37;
             Transform = new Transform(pos, new Size(SizeX, SizeY));
@@ -39,6 +39,13 @@ namespace GAME.Classes
             if (Transform.Position.X <= leftBoundary || Transform.Position.X + Transform.Size.Width >= rightBoundary)
             {
                 Speed = -Speed;
+                if (Speed < 0)
+                {
+                    Sprite = Properties.Resources.rivalL;
+                }
+                else
+                    Sprite = Properties.Resources.rivalR;
+
             }
         }
     }

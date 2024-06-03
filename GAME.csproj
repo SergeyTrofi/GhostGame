@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\GameController.cs" />
     <Compile Include="Classes\GeneralObjects.cs" />
     <Compile Include="Classes\Physics.cs" />
     <Compile Include="Classes\Pipe.cs" />
@@ -134,6 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\rival.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rivalL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rivalR.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
