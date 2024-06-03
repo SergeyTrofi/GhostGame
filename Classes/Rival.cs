@@ -20,7 +20,7 @@ namespace GAME.Classes
             SizeX = 37;
             SizeY = 37;
             Transform = new Transform(pos, new Size(SizeX, SizeY));
-            Speed = 2; // Задаем начальную скорость
+            Speed = 2; 
             leftBoundary = 0;
             rightBoundary = float.MaxValue;
         }
@@ -35,17 +35,14 @@ namespace GAME.Classes
         {
             Transform.Position = new PointF(Transform.Position.X + Speed, Transform.Position.Y);
 
-            // Поменять направление движения при достижении границы
             if (Transform.Position.X <= leftBoundary || Transform.Position.X + Transform.Size.Width >= rightBoundary)
             {
                 Speed = -Speed;
+
                 if (Speed < 0)
-                {
                     Sprite = Properties.Resources.rivalL;
-                }
                 else
                     Sprite = Properties.Resources.rivalR;
-
             }
         }
     }

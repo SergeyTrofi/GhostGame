@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GAME.Classes
 {
-    public class PlatformController // если придет жопа, добавить статик
+    public class PlatformController 
     {
         public static List<Platform> Platforms;
         public static int StartPlatformPosX = 390;
@@ -18,7 +18,7 @@ namespace GAME.Classes
             Platforms.Add(platform);
         }
 
-        public static void GenerateStartSequence()
+        public static void GenerateStartSequencePlatforms()
         {
             Random rnd = new Random();
             for (int i = 0; i < 10; i++)
@@ -35,9 +35,9 @@ namespace GAME.Classes
         public static void Init()
         {
             Platforms = new List<Platform>();
-            AddPlatform(new PointF(350, 90)); // Изменяем координаты платформы
+            AddPlatform(new PointF(350, 90)); 
             StartPlatformPosX = 400;
-            GenerateStartSequence();
+            GenerateStartSequencePlatforms();
         }
     }
 

@@ -14,8 +14,8 @@ namespace GAME.Classes
 
         public Transform(PointF positoin, Size size)
         {
-            this.Position = positoin;
-            this.Size = size;
+            Position = positoin;
+            Size = size;
         }
     }
 }

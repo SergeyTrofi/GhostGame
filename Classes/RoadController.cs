@@ -18,7 +18,7 @@ namespace GAME.Classes
             Roads.Add(road);
         }
 
-        public static void GenerateStartSequence()
+        public static void GenerateStartSequenceRoads()
         {
             for (int i = 0; i < 16; i++)
             {
@@ -33,7 +33,7 @@ namespace GAME.Classes
             Roads = new List<Road>();
             AddRoad(new PointF(0, 208)); 
             StartRoadPosX = 0;
-            GenerateStartSequence();
+            GenerateStartSequenceRoads();
         }
         
     }

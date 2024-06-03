@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using GAME.Classes;
 /*
-Phisics refactoring / Fix
 На гите убрать мусор (obj, bin)
 */
 namespace GAME
@@ -23,14 +22,14 @@ namespace GAME
             InitializeComponent();
             Init();
             timer = new Timer();
-            timer.Interval = 15;
+            timer.Interval = 14;
             timer.Tick += new EventHandler(Update);
             timer.Start();
-            this.KeyDown += new KeyEventHandler(OnKeyboardPressed);
-            this.KeyUp += new KeyEventHandler(OnKeyboardUp);
-            this.Height = 400; // Изменение высоты формы
-            this.Width = 600; // Изменение ширины формы
-            this.Paint += new PaintEventHandler(OnRepaint);
+            KeyDown += new KeyEventHandler(OnKeyboardPressed);
+            KeyUp += new KeyEventHandler(OnKeyboardUp);
+            Height = 400; 
+            Width = 600; 
+            Paint += new PaintEventHandler(OnRepaint);
             Instance = this;
         }
         public void Init()

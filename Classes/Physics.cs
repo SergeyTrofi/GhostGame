@@ -13,10 +13,10 @@ namespace GAME.Classes
     {
         public Transform Transform;
 
-        public float Gravity { get; set; }
+        public float Gravity { get; set; } 
         private float a;
-        public float XMotion { get; set; }
-        public bool IsJumping = false;
+        public float XMotion { get; set; } 
+        public bool IsJumping { get; set; } 
 
         public Physics(PointF position, Size size)
         {
@@ -24,7 +24,7 @@ namespace GAME.Classes
             Gravity = 0;
             a = 0.4f;
             XMotion = 0;
-            IsJumping = false; // Initialize IsJumping
+            IsJumping = false; 
         }
 
         public void ApplyPhysics()
@@ -47,7 +47,7 @@ namespace GAME.Classes
             if (Transform.Position.Y < 176)
             {
                 Transform.Position = new PointF(Transform.Position.X, Transform.Position.Y + Gravity);
-                Gravity += a; // Ускорение под действием гравитации
+                Gravity += a; 
             }
 
         }
@@ -84,14 +84,14 @@ namespace GAME.Classes
 
         private bool CheckCollisionsWithPipes()
         {
-            bool isOnPipe = false; // Флаг, чтобы отслеживать, находится ли игрок на трубе
+            bool isOnPipe = false;
 
             foreach (var pipe in PipeController.Pipes)
             {
                 if (IsVerticalCollision(pipe.Transform))
                 {
                     ResolveVerticalCollision(pipe.Transform);
-                    isOnPipe = true; // Игрок на трубе
+                    isOnPipe = true;
                 }
                 if (IsHorizontalCollision(pipe.Transform))
                 {
@@ -99,17 +99,16 @@ namespace GAME.Classes
                 }
             }
 
-            return isOnPipe; // Возвращаем true, если игрок на трубе, иначе false
+            return isOnPipe;
         }
 
 
         private void CheckCollisionsWithRivals()
         {
-            var rivals = new List<Rival>(RivalController.Rivals); // Создаем копию списка
+            var rivals = new List<Rival>(RivalController.Rivals); 
 
             foreach (var rival in rivals)
             {
-                // Установим границы движения для врага
                 float leftBoundary = float.MinValue;
                 float rightBoundary = float.MaxValue;
 
@@ -128,17 +127,16 @@ namespace GAME.Classes
 
                 rival.SetBoundaries(leftBoundary, rightBoundary);
 
-                // Двигаем врагов
                 rival.Move();
 
                 if (CheckIfFellOn(rival))
                 {
-                    RivalController.Rivals.Remove(rival); // Удаляем врага, если персонаж упал на него
+                    RivalController.Rivals.Remove(rival); 
                 }
 
                 if (IsHorizontalCollision(rival.Transform) || RivalController.Rivals.Count <= 0)
                 {
-                    OnRivalCollision(); 
+                    OnRivalCollision();
                 }
             }
         }
@@ -180,25 +178,25 @@ namespace GAME.Classes
         }
         private void ResolveHorizontalCollision(Transform other)
         {
-            if (XMotion > 0) // Игрок движется вправо
+            if (XMotion > 0) 
             {
                 Transform.Position = new PointF(other.Position.X - Transform.Size.Width, Transform.Position.Y);
-                XMotion = 0; // Остановить движение
+                XMotion = 0; 
             }
-            else if (XMotion < 0) // Игрок движется влево
+            else if (XMotion < 0) 
             {
                 Transform.Position = new PointF(other.Position.X + other.Size.Width, Transform.Position.Y);
-                XMotion = 0; // Остановить движение
+                XMotion = 0; 
             }
         }
         private void ResolveVerticalCollision(Transform other)
         {
-            if (Gravity > 0) // Игрок падает
+            if (Gravity > 0) 
             {
                 Transform.Position = new PointF(Transform.Position.X, other.Position.Y - Transform.Size.Height);
                 IsJumping = false;
             }
-            else if (Gravity < 0 && IsJumping) // Игрок прыгает, и находится в воздухе
+            else if (Gravity < 0 && IsJumping) 
             {
                 Transform.Position = new PointF(Transform.Position.X, other.Position.Y + Transform.Size.Height);
             }
@@ -228,9 +226,7 @@ namespace GAME.Classes
                 }
 
                 if (Transform.Position.Y >= 176 && Gravity > 0)
-                {
                     AddForce();
-                }
             }
         }
 
